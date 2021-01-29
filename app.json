@@ -10,6 +10,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "userInterfaceStyle": "light",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -23,7 +24,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyB-U2YdFdK3a6TSGbkTmGJImbaXc8FrGU8"
+        }
+      },
+      "useNextNotificationsApi": true,
     },
     "web": {
       "favicon": "./assets/favicon.png"
