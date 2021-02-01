@@ -1,18 +1,10 @@
-export const lightTheme = {
-  colors: {
-    primary: "grey",
-    secondary: "blue",
-    background: "#fff"
-  },
-}
-
 export const MyLightTheme = {
   dark: false,
   colors: {
-    primary: '#FFF',
+    primary: '#000',
     background: '#F1F1F1',
     card: '#03DAC6',
-    text: '#FFF',
+    text: '#000',
     border: '#03DAC6',
     notification: 'rgb(255, 69, 58)',
     grey: "#808080"
@@ -38,6 +30,8 @@ export const Images = {
   shoesShop: require('../../assets/shoes.png'),
   otherShop: require('../../assets/other.png'),
 
+
+  markerMan: require('../../assets/marker-man.png'),
   markerNewShop: require('../../assets/marker-new-shop.png'),
   markerFoodShop: require('../../assets/marker-food-shop.png'),
   markerClothesShop: require('../../assets/marker-clothes-shop.png'),

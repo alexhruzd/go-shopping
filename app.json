@@ -30,7 +30,12 @@
           "apiKey": "AIzaSyB-U2YdFdK3a6TSGbkTmGJImbaXc8FrGU8"
         }
       },
-      "useNextNotificationsApi": true,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION"
+      ],
+      "useNextNotificationsApi": true
     },
     "web": {
       "favicon": "./assets/favicon.png"

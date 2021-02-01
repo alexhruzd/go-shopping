@@ -1,9 +1,11 @@
 import React, {useContext, useEffect, useRef} from 'react';
 import {Button, Card, Divider, Text} from "react-native-elements";
-import {Animated, StyleSheet, View} from "react-native";
+import {Animated, Dimensions, StyleSheet, View} from "react-native";
 import ButtonLike from "../ButtonLike";
 import {ThemeModeContext} from "../../context/themeMode";
 import InfoShop from "../InfoShop";
+const height = Dimensions.get('window').height
+
 
 const ShopCard = ({shop, show, onHide}: any) => {
 
@@ -30,14 +32,14 @@ const ShopCard = ({shop, show, onHide}: any) => {
       style={{
         backgroundColor: theme.colors.background,
         width: '100%',
-        height: 200,
+        height: height/3.6,
         position: "absolute",
         bottom: 0,
         transform: [
           {
             translateY: animationView.interpolate({
               inputRange: [0, 1],
-              outputRange: [200, 0]
+              outputRange: [height/3.6, 0]
             })
           }
         ]
@@ -59,6 +61,7 @@ const ShopCard = ({shop, show, onHide}: any) => {
           style={{
             flex: 1,
             textAlign: "center",
+            color: theme.colors.text
           }}
         >{shop.name}</Text>
         <ButtonLike id={shop.id} like={shop.like}/>

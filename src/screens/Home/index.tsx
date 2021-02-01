@@ -6,12 +6,11 @@ const Home = ({navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      <Text>Home screen!</Text>
       <Button
         title="Map"
         type="outline"
         onPress={() => navigation.navigate("Map", {viewAll: true})}
-        containerStyle={{marginBottom: 10}}
+        containerStyle={{marginBottom: 20}}
       />
       <Button
         title="Add shop"

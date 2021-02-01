@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Picker, StyleSheet, Text, View} from "react-native";
+import {Picker, StyleSheet, Text, View} from "react-native";
 import Button from "../../components/Button";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -9,7 +9,7 @@ import {ThemeModeContext} from "../../context/themeMode";
 import {ShopsContext} from "../../context/shops";
 import {Shop, TypeShop} from "../../common/types";
 import 'react-native-get-random-values';
-import { v4 as uuid } from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 const schema = yup.object().shape({
   nameShop: yup.string().required("Name is required!"),
@@ -30,8 +30,10 @@ const CreateShop = ({navigation, route}: any) => {
   const [selectedType, setSelectedType] = useState("Food");
   const [shopCoords, setShopCoords] = useState<any>({});
 
-  useEffect(()=> {
-    if(route.params?.pressCoords) {
+  const [errorMessage, setErrorMessage] = useState("")
+
+  useEffect(() => {
+    if (route.params?.pressCoords) {
       setShopCoords(route.params?.pressCoords);
     }
   }, [route.params?.pressCoords])
@@ -43,6 +45,12 @@ const CreateShop = ({navigation, route}: any) => {
   }, [register])
 
   const onAddShop = (data: any) => {
+
+    if(!shopCoords.latitude || !shopCoords.longitude){
+      setErrorMessage("Coords is required!");
+      return;
+    }
+
     let shop: Shop;
     shop = {
       id: uuid(),
@@ -54,16 +62,11 @@ const CreateShop = ({navigation, route}: any) => {
     }
 
     addShop(shop);
+    navigation.navigate("Map", {viewAll: true})
   }
 
   return (
     <View style={styles.container}>
-
-      <Input
-        label="Enter name Shop:"
-        onChangeText={(text) => setValue('nameShop', text, {shouldValidate: true})}
-        errorMessage={errors.nameShop?.message}
-      />
 
       <Picker
         selectedValue={selectedType}
@@ -74,10 +77,10 @@ const CreateShop = ({navigation, route}: any) => {
         style={{
           height: 50,
           width: "100%",
-          color: theme.colors.card,
+          color: theme.colors.text,
+          fontSize: 22,
           marginBottom: 20
         }}
-
       >
         <Picker.Item label={TypeShop.FOOD} value={TypeShop.FOOD}/>
         <Picker.Item label={TypeShop.CLOTHES} value={TypeShop.CLOTHES}/>
@@ -87,6 +90,18 @@ const CreateShop = ({navigation, route}: any) => {
       </Picker>
 
       <Input
+        style={{
+          color: theme.colors.text,
+        }}
+        label="Enter name Shop:"
+        onChangeText={(text) => setValue('nameShop', text, {shouldValidate: true})}
+        errorMessage={errors.nameShop?.message}
+      />
+
+      <Input
+        style={{
+          color: theme.colors.text,
+        }}
         label="Enter phone number:"
         keyboardType="number-pad"
         onChangeText={(text) => setValue('phone', text, {shouldValidate: true})}
@@ -94,14 +109,39 @@ const CreateShop = ({navigation, route}: any) => {
       />
 
       <View style={styles.row}>
+
+        <View style={styles.coords}>
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontSize: 18,
+              marginBottom: 10
+            }}
+          >Latitude: '{shopCoords.latitude}'
+          </Text>
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontSize: 18,
+            }}
+          >Longitude: '{shopCoords.longitude}'
+          </Text>
+        </View>
+
         <Button
-          title="Get coordinates"
+          title="+"
           type="outline"
-          onPress={()=>navigation.navigate("Map", {isAdd: true})}
+          containerStyle={{
+            width: 60
+          }}
+          onPress={() => navigation.navigate("Map", {isAdd: true})}
         />
-        <Text>Latitude: '{shopCoords.latitude}'</Text>
-        <Text>Longitude: '{shopCoords.longitude}'</Text>
+
       </View>
+
+      {errorMessage.length !== 0 && (
+        <Text style={{ color: "red", marginBottom: 10 }}>{errorMessage}</Text>
+      )}
 
       <Button
         title="Add Shop"
@@ -119,9 +159,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   row: {
-    width: "100%",
+    width: "95%",
     display: "flex",
+    flexDirection: "row",
     marginBottom: 20
+  },
+  coords: {
+    flex: 1
   }
 
 })

@@ -40,12 +40,22 @@ const ShopsList = () => {
   }
 
   const renderItem = ({item}: any) => (
-    <ListItem bottomDivider>
+    <ListItem
+      bottomDivider
+      containerStyle={{
+        backgroundColor: theme.colors.background,
+        borderColor: theme.colors.border
+      }}
+    >
       <Avatar
         source={getAvatarShop(item.type)}
       />
       <ListItem.Content>
-        <ListItem.Title>{item.name}</ListItem.Title>
+        <ListItem.Title
+          style={{
+            color: theme.colors.text
+          }}
+        >{item.name}</ListItem.Title>
       </ListItem.Content>
 
       <ButtonLike id={item.id} like={item.like} />

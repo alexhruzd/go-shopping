@@ -17,3 +17,8 @@ export enum TypeShop {
   SPORT = "Sport",
   OTHER = "Other"
 }
+
+export enum TypeTask {
+  LOCATION_TASK = "background-location-task",
+
+}
