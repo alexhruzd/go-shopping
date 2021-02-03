@@ -3,15 +3,12 @@ import {Dimensions, StyleSheet, View} from "react-native";
 import MapView, {Marker} from "react-native-maps";
 import * as Location from "expo-location";
 import Button from "../../components/Button";
-import {Button as RNEButton} from "react-native-elements";
 
 import {Images} from "../../theme";
 import {ShopsContext} from "../../context/shops";
 import {Shop, TypeShop, TypeTask} from "../../common/types";
 import ShopCard from "../../components/ShopCard";
-import {SearchBar} from "react-native-elements";
 import {ThemeModeContext} from "../../context/themeMode";
-import * as TaskManager from 'expo-task-manager';
 
 const height = Dimensions.get('window').height
 
@@ -84,29 +81,29 @@ const Map = ({route, navigation}: any) => {
 
     return (
       <>
-        {route.params?.viewAll && (
-          <View style={styles.searchPanel}>
-            <SearchBar
-              containerStyle={{flex: 1}}
-              placeholder="Search..."
-              value={searchText}
-              onChangeText={(text) => onChangeFilter(text, likeFilter)}
-              lightTheme={!theme.dark}
-            />
-            <RNEButton
-              type="clear"
-              titleStyle={{color: "gold"}}
-              icon={{
-                name: likeFilter ? "star" : "star-o",
-                type: "font-awesome",
-                size: 25,
-                color: "orange"
-              }}
-              onPress={() => onChangeFilter(searchText, !likeFilter)}
-            />
-          </View>
+        {/*{route.params?.viewAll && (*/}
+        {/*  <View style={styles.searchPanel}>*/}
+        {/*    <SearchBar*/}
+        {/*      containerStyle={{flex: 1}}*/}
+        {/*      placeholder="Search..."*/}
+        {/*      value={searchText}*/}
+        {/*      onChangeText={(text) => onChangeFilter(text, likeFilter)}*/}
+        {/*      lightTheme={!theme.dark}*/}
+        {/*    />*/}
+        {/*    <RNEButton*/}
+        {/*      type="clear"*/}
+        {/*      titleStyle={{color: "gold"}}*/}
+        {/*      icon={{*/}
+        {/*        name: likeFilter ? "star" : "star-o",*/}
+        {/*        type: "font-awesome",*/}
+        {/*        size: 25,*/}
+        {/*        color: "orange"*/}
+        {/*      }}*/}
+        {/*      onPress={() => onChangeFilter(searchText, !likeFilter)}*/}
+        {/*    />*/}
+        {/*  </View>*/}
 
-        )}
+        {/*)}*/}
         {mapRegion && (
           <MapView
             style={styles.map}

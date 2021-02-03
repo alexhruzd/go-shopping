@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
 
-import * as yup from "yup";
+import * as yup from 'yup';
 
-import {useForm} from "react-hook-form";
+import {useForm} from "react-hook-form/dist";
 import {StyleSheet, Text, View} from "react-native";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Input} from "react-native-elements";
+import Input from "../../components/Input";
 
 import Button from "../../components/Button";
 import {AuthContext} from "../../context/auth";
@@ -42,12 +42,12 @@ const SignIn = () => {
     <View style={styles.container}>
       <Input
         label="Enter login or email:"
-        onChangeText={(text) => setValue('login', text, {shouldValidate: true})}
+        onChangeText={(text:string) => setValue('login', text, {shouldValidate: true})}
         errorMessage={errors.login?.message}
       />
       <Input
         label="Enter password:"
-        onChangeText={(text) => setValue('password', text, {shouldValidate: true})}
+        onChangeText={(text:string) => setValue('password', text, {shouldValidate: true})}
         errorMessage={errors.password?.message}
       />
 

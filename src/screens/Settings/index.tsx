@@ -39,13 +39,11 @@ const Settings = () => {
         <Text style={{color: theme.colors.grey, marginLeft: 10}}>Dark Theme</Text>
       </View>
 
-
-
       <Button
         title="Sign Out"
         type="outline"
         onPress={onSignOut}
-        containerStyle={{marginTop: 50}}
+        style={{marginTop: 50}}
       />
 
     </View>

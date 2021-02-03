@@ -5,8 +5,7 @@ import * as yup from "yup";
 import {useForm} from "react-hook-form";
 import {StyleSheet, Text, View} from "react-native";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Input} from "react-native-elements";
-
+import Input from "../../components/Input";
 import Button from "../../components/Button";
 import {AuthContext} from "../../context/auth";
 

@@ -1,3 +1,5 @@
+import {Images} from "../theme";
+
 export interface Shop {
   id?: string,
   name?: string,
@@ -20,5 +22,19 @@ export enum TypeShop {
 
 export enum TypeTask {
   LOCATION_TASK = "background-location-task",
+}
 
+export const getAvatarShop = (type: any) => {
+  switch (type) {
+    case TypeShop.FOOD:
+      return Images.foodShop;
+    case TypeShop.CLOTHES:
+      return Images.clothesShop;
+    case TypeShop.SHOES:
+      return Images.shoesShop;
+    case TypeShop.SPORT:
+      return Images.sportShop;
+    default:
+      return Images.otherShop;
+  }
 }

@@ -25,7 +25,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-<<<<<<< HEAD
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyB-U2YdFdK3a6TSGbkTmGJImbaXc8FrGU8"
@@ -37,9 +36,6 @@
         "ACCESS_BACKGROUND_LOCATION"
       ],
       "useNextNotificationsApi": true
-=======
-      "useNextNotificationsApi": true,
->>>>>>> f2edd27c6309fb28e1eea31c028bf2bad414f865
     },
     "web": {
       "favicon": "./assets/favicon.png"

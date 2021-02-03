@@ -10,7 +10,7 @@ const Home = ({navigation}: any) => {
         title="Map"
         type="outline"
         onPress={() => navigation.navigate("Map", {viewAll: true})}
-        containerStyle={{marginBottom: 20}}
+        style={{marginBottom: 20}}
       />
       <Button
         title="Add shop"

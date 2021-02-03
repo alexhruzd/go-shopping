@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
-import {Input} from "react-native-elements";
+import Input from "../../components/Input";
 import {ThemeModeContext} from "../../context/themeMode";
 import {ShopsContext} from "../../context/shops";
 import {Shop, TypeShop} from "../../common/types";
@@ -68,6 +68,15 @@ const CreateShop = ({navigation, route}: any) => {
   return (
     <View style={styles.container}>
 
+      <Text
+        style={{
+          color: theme.colors.grey,
+          textAlign: "left",
+          fontWeight: "bold",
+          fontSize: 16,
+          width: "95%"
+        }}
+      >Select type of Shop:</Text>
       <Picker
         selectedValue={selectedType}
         onValueChange={(text) => {
@@ -79,7 +88,7 @@ const CreateShop = ({navigation, route}: any) => {
           width: "100%",
           color: theme.colors.text,
           fontSize: 22,
-          marginBottom: 20
+          marginBottom: 10
         }}
       >
         <Picker.Item label={TypeShop.FOOD} value={TypeShop.FOOD}/>
@@ -131,7 +140,7 @@ const CreateShop = ({navigation, route}: any) => {
         <Button
           title="+"
           type="outline"
-          containerStyle={{
+          style={{
             width: 60
           }}
           onPress={() => navigation.navigate("Map", {isAdd: true})}

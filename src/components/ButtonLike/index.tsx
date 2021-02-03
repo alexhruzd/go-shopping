@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import {Button} from "react-native-elements";
 import {ShopsContext} from "../../context/shops";
+import {FontAwesome} from "@expo/vector-icons";
 
 const ButtonLike = ({id, like}: any) => {
 
@@ -11,16 +11,15 @@ const ButtonLike = ({id, like}: any) => {
   }
 
   return (
-    <Button
-      type="clear"
-      titleStyle={{color: "red"}}
-      icon={{
-        name: like ? "star" : "star-o",
-        type: "font-awesome",
-        size: 18,
-        color: "red"
-      }}
+    <FontAwesome.Button
       onPress={onLikeShop}
+      name={like ? "star-o" : "star"}
+      color="red"
+      // @ts-ignore
+      backgroundColor="transparent"
+      iconStyle={{
+        margin: 0,
+      }}
     />
   );
 }

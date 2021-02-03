@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import {Button, Card, Divider, Text} from "react-native-elements";
-import {Animated, Dimensions, StyleSheet, View} from "react-native";
+import {Animated, Dimensions, StyleSheet, Text, View} from "react-native";
 import ButtonLike from "../ButtonLike";
 import {ThemeModeContext} from "../../context/themeMode";
 import InfoShop from "../InfoShop";
-const height = Dimensions.get('window').height
+import { FontAwesome } from '@expo/vector-icons';
 
+const height = Dimensions.get('window').height
 
 const ShopCard = ({shop, show, onHide}: any) => {
 
@@ -46,27 +46,28 @@ const ShopCard = ({shop, show, onHide}: any) => {
       }}
     >
       <View style={styles.headerCard}>
-        <Button
-          type="clear"
-          icon={{
-            name: "times",
-            type: "font-awesome",
-            size: 22,
-            color: theme.colors.grey
-          }}
+        <FontAwesome.Button
           onPress={onHide}
+          name="times"
+          size={22}
+          color={theme.colors.grey}
+          // @ts-ignore
+          backgroundColor="transparent"
+          iconStyle={{
+            margin: 0,
+          }}
         />
         <Text
-          h3
           style={{
             flex: 1,
             textAlign: "center",
-            color: theme.colors.text
+            color: theme.colors.text,
+            fontWeight: "bold",
+            fontSize: 28
           }}
         >{shop.name}</Text>
         <ButtonLike id={shop.id} like={shop.like}/>
       </View>
-      <Divider style={{backgroundColor: theme.colors.border}}/>
       <InfoShop shop={shop}/>
     </Animated.View>
   );

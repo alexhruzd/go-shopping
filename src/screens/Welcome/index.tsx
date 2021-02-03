@@ -12,7 +12,9 @@ const Welcome = ({navigation}: any) => {
         onPress={() => navigation.navigate("SingIn")}
         title="SingIn"
         type="outline"
-        containerStyle={{marginBottom: 20}}
+        style={{
+          marginBottom: 20
+        }}
       />
       <Button
         onPress={() => navigation.navigate("Register")}
