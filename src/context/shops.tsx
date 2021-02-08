@@ -1,7 +1,8 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {AuthContext} from "./auth";
 import {AsyncStorage} from "react-native";
-import {Shop} from "../common/types";
+import {Shop, TypeTask} from "../common/types";
+import * as Location from 'expo-location';
 
 export const ShopsContext = createContext<{
   shops?: any,
@@ -13,7 +14,31 @@ export const ShopsProvider = ({children}: any) => {
   const {userAuth} = useContext(AuthContext);
 
   const [shops, setShops] = useState<Shop[]>([]);
-  const [currentUser, setCurrentUser]= useState({});
+  const [currentUser, setCurrentUser] = useState({});
+
+  const setGeofencingShops = async (shops: any) => {
+    let regions = shops
+      ? shops.reduce((arr: any ,shop: Shop) => {
+        if (shop.like) {
+          arr.push({
+            identifier: shop.id,
+            latitude: shop.coords?.latitude,
+            longitude: shop.coords?.longitude,
+            radius: 500,
+            notifyOnExit: false
+          });
+        }
+        return arr;
+      }, [])
+      : null;
+
+    if (regions) {
+      const {status} = await Location.requestPermissionsAsync();
+      if (status === 'granted') {
+        await Location.startGeofencingAsync(TypeTask.GEOFENCING_TASK, regions);
+      }
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -22,9 +47,13 @@ export const ShopsProvider = ({children}: any) => {
         let user = JSON.parse(userIs);
         setCurrentUser(user)
         setShops(user.shops || []);
+
+        await setGeofencingShops(user.shops);
       }
     })();
   }, [userAuth])
+
+
 
   const addShop = async (shop: Shop) => {
     let newShops = [...shops, shop]
@@ -34,13 +63,12 @@ export const ShopsProvider = ({children}: any) => {
       ...currentUser,
       shops: newShops
     }
-    console.log("DATAUSER",dataUser)
     await AsyncStorage.setItem(userAuth, JSON.stringify(dataUser));
   }
 
-  const addLike = async (id:any) => {
-    let newShops = shops.map((shop)=> {
-      if(shop.id !== id) return shop
+  const addLike = async (id: any) => {
+    let newShops = shops.map((shop) => {
+      if (shop.id !== id) return shop
       else {
         shop.like = !shop.like;
         return shop;

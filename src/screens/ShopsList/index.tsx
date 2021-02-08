@@ -4,6 +4,7 @@ import {Shop} from "../../common/types";
 import {Dimensions, FlatList, StyleSheet, View} from "react-native";
 import {ThemeModeContext} from "../../context/themeMode";
 import ShopItem from "../../components/ShopItem";
+import SearchBar from "../../components/SearchBar";
 
 const height = Dimensions.get('window').height
 
@@ -32,6 +33,10 @@ const ShopsList = () => {
 
   return (
     <View style={styles.container}>
+      <SearchBar
+        placeholder="Search..."
+        onChangeText={onChange}
+      />
       <FlatList data={filterShops} renderItem={renderItem} keyExtractor={item => item.id}/>
     </View>
   );

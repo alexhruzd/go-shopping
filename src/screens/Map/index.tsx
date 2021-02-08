@@ -9,6 +9,9 @@ import {ShopsContext} from "../../context/shops";
 import {Shop, TypeShop, TypeTask} from "../../common/types";
 import ShopCard from "../../components/ShopCard";
 import {ThemeModeContext} from "../../context/themeMode";
+import SearchBar from "../../components/SearchBar";
+import {FontAwesome} from "@expo/vector-icons";
+import * as TaskManager from "expo-task-manager";
 
 const height = Dimensions.get('window').height
 
@@ -18,7 +21,12 @@ const Map = ({route, navigation}: any) => {
     const {shops} = useContext(ShopsContext);
 
 
-    const [mapRegion, setMapRegion] = useState<any>(null);
+    const [mapRegion, setMapRegion] = useState<any>({
+      latitude: 53.9374874,
+      longitude: 27.5632255,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.015
+    });
 
     const [searchText, setSearchText] = useState("");
     const [likeFilter, setLikeFilter] = useState(false);
@@ -55,9 +63,6 @@ const Map = ({route, navigation}: any) => {
       })();
     }, [])
 
-
-
-
     const getMarkerShop = (type: any) => {
       switch (type) {
         case TypeShop.FOOD:
@@ -74,45 +79,51 @@ const Map = ({route, navigation}: any) => {
     }
 
     const onChangeFilter = (text: string, like: boolean) => {
+      setShopShow({
+        show: false,
+        shop: {}
+      });
       setLikeFilter(like);
       setSearchText(text);
-      setFilterShops(shops.filter((shop: Shop) => shop.name?.search(RegExp(text, "ig")) !== -1 && (like ? shop.like === like : true)))
+      setFilterShops(shops.filter((shop: Shop) => shop.name?.search(RegExp(text, "ig")) !== -1 && (like ? (shop.like === like) : true)))
     }
 
     return (
       <>
-        {/*{route.params?.viewAll && (*/}
-        {/*  <View style={styles.searchPanel}>*/}
-        {/*    <SearchBar*/}
-        {/*      containerStyle={{flex: 1}}*/}
-        {/*      placeholder="Search..."*/}
-        {/*      value={searchText}*/}
-        {/*      onChangeText={(text) => onChangeFilter(text, likeFilter)}*/}
-        {/*      lightTheme={!theme.dark}*/}
-        {/*    />*/}
-        {/*    <RNEButton*/}
-        {/*      type="clear"*/}
-        {/*      titleStyle={{color: "gold"}}*/}
-        {/*      icon={{*/}
-        {/*        name: likeFilter ? "star" : "star-o",*/}
-        {/*        type: "font-awesome",*/}
-        {/*        size: 25,*/}
-        {/*        color: "orange"*/}
-        {/*      }}*/}
-        {/*      onPress={() => onChangeFilter(searchText, !likeFilter)}*/}
-        {/*    />*/}
-        {/*  </View>*/}
+        {route.params?.viewAll && (
+          <View style={styles.searchPanel}>
+            <SearchBar
+              style={{
+                flex: 1,
+                borderBottomWidth: 0,
+              }}
+              placeholder="Search..."
+              onChangeText={(text: string) => onChangeFilter(text, likeFilter)}
+            />
+            <FontAwesome.Button
+              onPress={() => onChangeFilter(searchText, !likeFilter)}
+              name={likeFilter ? "star" : "star-o"}
+              size={24}
+              color="gold"
+              // @ts-ignore
+              backgroundColor="transparent"
+              iconStyle={{
+                margin: 0,
+              }}
+            />
+          </View>
+        )}
 
-        {/*)}*/}
         {mapRegion && (
           <MapView
             style={styles.map}
             loadingEnabled={true}
-            initialRegion={mapRegion}
+            region={mapRegion}
             onPress={(e) => {
               setPressCoords(e.nativeEvent.coordinate);
             }}
-            onRegionChange={setMapRegion}
+            onRegionChangeComplete={setMapRegion}
+            showsUserLocation={true}
           >
             {route.params?.isAdd && (
               <Marker
@@ -144,7 +155,6 @@ const Map = ({route, navigation}: any) => {
           </MapView>
         )}
 
-
         <ShopCard
           shop={shopShow.shop}
           show={shopShow.show}
@@ -153,7 +163,6 @@ const Map = ({route, navigation}: any) => {
             shop: {}
           })}
         />
-
 
         {route.params?.isAdd && (
           <View style={styles.button}>

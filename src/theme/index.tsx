@@ -7,7 +7,8 @@ export const MyLightTheme = {
     text: '#000',
     border: '#03DAC6',
     notification: 'rgb(255, 69, 58)',
-    grey: "#808080"
+    grey: "#808080",
+    active: '#F1F1F1'
   },
 }
 export const MyDarkTheme = {
@@ -19,7 +20,8 @@ export const MyDarkTheme = {
     text: '#03DAC6',
     border: '#03DAC6',
     notification: 'rgb(255, 69, 58)',
-    grey: "#808080"
+    grey: "#808080",
+    active: "#505050"
   },
 }
 

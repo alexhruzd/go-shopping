@@ -4,10 +4,17 @@ import ButtonLike from "../ButtonLike";
 import {ThemeModeContext} from "../../context/themeMode";
 import InfoShop from "../InfoShop";
 import { FontAwesome } from '@expo/vector-icons';
+import {Shop} from "../../common/types";
 
 const height = Dimensions.get('window').height
 
-const ShopCard = ({shop, show, onHide}: any) => {
+interface PropsShopCard {
+  shop?: Shop,
+  show?: boolean,
+  onHide?: any
+}
+
+const ShopCard = ({shop, show, onHide}: PropsShopCard) => {
 
   const {theme} = useContext(ThemeModeContext);
   const animationView = useRef(new Animated.Value(0)).current;
@@ -65,8 +72,8 @@ const ShopCard = ({shop, show, onHide}: any) => {
             fontWeight: "bold",
             fontSize: 28
           }}
-        >{shop.name}</Text>
-        <ButtonLike id={shop.id} like={shop.like}/>
+        >{shop?.name}</Text>
+        <ButtonLike id={shop?.id} like={shop?.like}/>
       </View>
       <InfoShop shop={shop}/>
     </Animated.View>

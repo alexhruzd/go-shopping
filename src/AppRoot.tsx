@@ -8,10 +8,14 @@ import {ThemeModeContext, ThemeModeProvider} from "./context/themeMode";
 import {ShopsProvider} from "./context/shops";
 import {NotificationProvider} from "./context/notification";
 
+import * as TaskManager from 'expo-task-manager';
+import {TypeTask} from "./common/types";
+
 function App() {
 
   const {isAuth}: any = useContext(AuthContext);
   const {theme} = useContext(ThemeModeContext);
+
 
   if (!isAuth) {
     return (

@@ -13,7 +13,15 @@ const Main = () => {
   const {theme} = useContext(ThemeModeContext);
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        labelStyle: {
+          fontSize: 18,
+          padding: 10
+        },
+        activeBackgroundColor: theme.colors.active
+      }}
+    >
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Shops" component={ShopsList} />
       <Tab.Screen name="Settings" component={Settings} />

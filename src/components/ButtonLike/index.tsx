@@ -13,7 +13,7 @@ const ButtonLike = ({id, like}: any) => {
   return (
     <FontAwesome.Button
       onPress={onLikeShop}
-      name={like ? "star-o" : "star"}
+      name={like ? "star" : "star-o"}
       color="red"
       // @ts-ignore
       backgroundColor="transparent"

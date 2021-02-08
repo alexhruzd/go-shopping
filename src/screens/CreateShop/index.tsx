@@ -103,7 +103,7 @@ const CreateShop = ({navigation, route}: any) => {
           color: theme.colors.text,
         }}
         label="Enter name Shop:"
-        onChangeText={(text) => setValue('nameShop', text, {shouldValidate: true})}
+        onChangeText={(text: any) => setValue('nameShop', text, {shouldValidate: true})}
         errorMessage={errors.nameShop?.message}
       />
 
@@ -112,8 +112,8 @@ const CreateShop = ({navigation, route}: any) => {
           color: theme.colors.text,
         }}
         label="Enter phone number:"
-        keyboardType="number-pad"
-        onChangeText={(text) => setValue('phone', text, {shouldValidate: true})}
+        keyboardType="phone-pad"
+        onChangeText={(text: any) => setValue('phone', text, {shouldValidate: true})}
         errorMessage={errors.phone?.message}
       />
 

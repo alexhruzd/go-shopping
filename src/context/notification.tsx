@@ -1,10 +1,14 @@
 import React, {createContext, useEffect, useRef, useState} from "react";
 import * as Notifications from "expo-notifications";
+import {AsyncStorage} from "react-native";
+import { LocationGeofencingEventType } from 'expo-location';
+import * as TaskManager from 'expo-task-manager';
+import {TypeTask} from "../common/types";
 
 export const NotificationContext = createContext<{
-  sendPushNotification?: any,
   notification?: any,
 }>({});
+
 
 export const NotificationProvider = ({children}: any) => {
   const [expoToken, setExpoToken] = useState<string | undefined>('');
@@ -21,13 +25,13 @@ export const NotificationProvider = ({children}: any) => {
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       // @ts-ignore
       setNotification(notification);
-      console.log(notification)
+      console.log("foreground", notification)
     });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     // @ts-ignore
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+      console.log("clock on push", response);
     });
 
     return () => {
@@ -52,37 +56,49 @@ export const NotificationProvider = ({children}: any) => {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
+    await AsyncStorage.setItem("push_token", token);
 
     return token;
   }
 
-  const sendPushNotification = async () => {
-    const message = {
-      to: expoToken,
-      sound: 'default',
-      title: 'Hello',
-      body: 'Alex!',
-      data: {someData: 'goes here'},
-    };
-
-    await fetch('https://exp.host/--/api/v2/push/send', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Accept-encoding': 'gzip, deflate',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    });
-
-  }
-
   return (
     <NotificationContext.Provider value={{
-      sendPushNotification,
       notification
     }}>
       {children}
     </NotificationContext.Provider>
   );
 }
+
+const sendPushNotification = async (id: string) => {
+  let token = await AsyncStorage.getItem("push_token");
+
+  const message = {
+    to: token,
+    sound: 'default',
+    title: 'Go shopping!',
+    body: 'Shop is near!!!',
+    data: {id: id},
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
+
+TaskManager.defineTask(TypeTask.GEOFENCING_TASK, async ({ data: { eventType, region }, error }: any) => {
+  if (error) {
+    // check `error.message` for more details.
+    return;
+  }
+  if (eventType === LocationGeofencingEventType.Enter) {
+    console.log("You've entered region:", region);
+    await sendPushNotification(region.identifier);
+  }
+});

@@ -21,7 +21,7 @@ export enum TypeShop {
 }
 
 export enum TypeTask {
-  LOCATION_TASK = "background-location-task",
+  GEOFENCING_TASK = "background-geofencing-task",
 }
 
 export const getAvatarShop = (type: any) => {
@@ -38,3 +38,4 @@ export const getAvatarShop = (type: any) => {
       return Images.otherShop;
   }
 }
+

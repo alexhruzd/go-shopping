@@ -22,7 +22,7 @@ const SignIn = () => {
     resolver: yupResolver(schema),
   })
 
-  const { signIn }: any = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("")
 
   useEffect(() => {
