@@ -11,7 +11,6 @@ import ShopCard from "../../components/ShopCard";
 import {ThemeModeContext} from "../../context/themeMode";
 import SearchBar from "../../components/SearchBar";
 import {FontAwesome} from "@expo/vector-icons";
-import * as TaskManager from "expo-task-manager";
 
 const height = Dimensions.get('window').height
 
